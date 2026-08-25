@@ -1,1 +1,2043 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Mata Маркет — Заказы</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --blue:#5b59e8;
+    --blue-dark:#4140c7;
+    --dark:#202126;
+    --gray:#70727d;
+    --light:#f5f5fa;
+    --white:#fff;
+    --border:#e5e5ed;
+
+    --yellow:#f59e0b;
+    --green:#16a34a;
+    --orange:#ea580c;
+    --red:#dc2626;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--light);
+    color:var(--dark);
+}
+
+button,
+input,
+select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1400px,94%);
+    margin:auto;
+}
+
+
+/* ================= HEADER ================= */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(255,255,255,.95);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid var(--border);
+}
+
+.header-inner{
+    min-height:72px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:20px;
+    font-weight:800;
+}
+
+.logo img{
+    width:45px;
+    height:45px;
+    object-fit:cover;
+    border-radius:50%;
+}
+
+.header-actions{
+    display:flex;
+    gap:10px;
+}
+
+.header-btn{
+    border:0;
+    background:#eeeeff;
+    color:var(--blue);
+    padding:11px 16px;
+    border-radius:11px;
+    font-weight:bold;
+}
+
+.header-btn:hover{
+    background:#e2e2ff;
+}
+
+
+/* ================= MAIN ================= */
+
+main{
+    padding:35px 0 70px;
+}
+
+.page-title{
+    margin-bottom:25px;
+}
+
+.page-title h1{
+    font-size:34px;
+}
+
+.page-title p{
+    color:var(--gray);
+    margin-top:5px;
+}
+
+
+/* ================= STATS ================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+    margin-bottom:25px;
+}
+
+.stat{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:22px;
+}
+
+.stat-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+.stat-icon{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:21px;
+    background:#eeeeff;
+}
+
+.stat-label{
+    color:var(--gray);
+    font-size:14px;
+}
+
+.stat-value{
+    font-size:28px;
+    font-weight:800;
+}
+
+
+/* ================= TOOLBAR ================= */
+
+.toolbar{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:16px;
+    display:flex;
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.search{
+    flex:1;
+    position:relative;
+}
+
+.search input{
+    width:100%;
+    height:46px;
+    border:1px solid var(--border);
+    border-radius:11px;
+    padding:0 15px 0 42px;
+    outline:none;
+    background:#fafafd;
+}
+
+.search input:focus{
+    border-color:var(--blue);
+}
+
+.search span{
+    position:absolute;
+    left:15px;
+    top:12px;
+}
+
+.filter{
+    min-width:190px;
+    height:46px;
+    border:1px solid var(--border);
+    border-radius:11px;
+    padding:0 12px;
+    background:#fafafd;
+    outline:none;
+}
+
+
+/* ================= ORDERS ================= */
+
+.orders{
+    display:grid;
+    gap:14px;
+}
+
+.order{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:20px;
+    transition:.2s;
+}
+
+.order:hover{
+    box-shadow:0 10px 30px rgba(0,0,0,.06);
+}
+
+.order.new{
+    border:2px solid #fbbf24;
+    background:linear-gradient(
+        135deg,
+        #fffdf4,
+        #fff
+    );
+}
+
+.order-top{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    align-items:flex-start;
+}
+
+.order-number{
+    font-size:18px;
+    font-weight:800;
+}
+
+.order-date{
+    color:var(--gray);
+    font-size:13px;
+    margin-top:4px;
+}
+
+.order-customer{
+    margin-top:15px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.info{
+    background:#f8f8fc;
+    border-radius:12px;
+    padding:12px;
+}
+
+.info small{
+    color:var(--gray);
+    display:block;
+    margin-bottom:4px;
+}
+
+.info strong{
+    word-break:break-word;
+}
+
+.order-bottom{
+    margin-top:15px;
+    padding-top:15px;
+    border-top:1px solid var(--border);
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    align-items:center;
+}
+
+.order-total{
+    font-size:21px;
+    font-weight:800;
+}
+
+.order-actions{
+    display:flex;
+    gap:8px;
+}
+
+.action-btn{
+    border:0;
+    border-radius:10px;
+    padding:10px 13px;
+    font-weight:bold;
+}
+
+.view-btn{
+    background:#eeeeff;
+    color:var(--blue);
+}
+
+.delete-btn{
+    background:#ffe9e9;
+    color:var(--red);
+}
+
+
+/* ================= STATUS ================= */
+
+.status{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    border-radius:30px;
+    padding:7px 11px;
+    font-size:12px;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+.status-new{
+    background:#fff3cd;
+    color:#9a6700;
+}
+
+.status-processing{
+    background:#e8e9ff;
+    color:#4946c7;
+}
+
+.status-collected{
+    background:#fff0df;
+    color:#b45309;
+}
+
+.status-shipped{
+    background:#e1f0ff;
+    color:#1769aa;
+}
+
+.status-completed{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.status-cancelled{
+    background:#fee2e2;
+    color:#b91c1c;
+}
+
+
+/* ================= MODAL ================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    background:rgba(0,0,0,.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+}
+
+.modal.active{
+    display:flex;
+}
+
+.modal-box{
+    width:min(720px,100%);
+    max-height:92vh;
+    overflow:auto;
+    background:white;
+    border-radius:22px;
+    padding:25px;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.close{
+    width:40px;
+    height:40px;
+    border:0;
+    border-radius:10px;
+    background:#f0f0f5;
+    font-size:20px;
+}
+
+.modal-section{
+    margin-top:20px;
+}
+
+.modal-section h3{
+    margin-bottom:10px;
+}
+
+.customer-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.detail{
+    background:#f7f7fb;
+    border-radius:12px;
+    padding:13px;
+}
+
+.detail small{
+    color:var(--gray);
+    display:block;
+    margin-bottom:4px;
+}
+
+.items{
+    display:grid;
+    gap:8px;
+}
+
+.item{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    padding:12px;
+    border:1px solid var(--border);
+    border-radius:12px;
+}
+
+.item-name{
+    font-weight:bold;
+}
+
+.item-meta{
+    color:var(--gray);
+    font-size:13px;
+}
+
+.modal-total{
+    display:flex;
+    justify-content:space-between;
+    padding:16px;
+    margin-top:15px;
+    border-radius:13px;
+    background:var(--dark);
+    color:white;
+}
+
+.modal-total strong{
+    font-size:20px;
+}
+
+.status-change{
+    display:flex;
+    gap:10px;
+}
+
+.status-change select{
+    flex:1;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:11px;
+}
+
+.save-btn{
+    border:0;
+    background:var(--blue);
+    color:white;
+    border-radius:10px;
+    padding:11px 18px;
+    font-weight:bold;
+}
+
+
+/* ================= EMPTY ================= */
+
+.empty{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    text-align:center;
+    padding:60px 20px;
+    color:var(--gray);
+}
+
+.empty-icon{
+    font-size:50px;
+    margin-bottom:10px;
+}
+
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:2000;
+    background:#202126;
+    color:white;
+    padding:14px 18px;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+    transform:translateY(120px);
+    opacity:0;
+    transition:.3s;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:900px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .order-customer{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:calc(100% - 24px);
+    }
+
+    main{
+        padding-top:22px;
+    }
+
+    .page-title h1{
+        font-size:28px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .stat{
+        padding:16px;
+    }
+
+    .stat-value{
+        font-size:22px;
+    }
+
+    .toolbar{
+        flex-direction:column;
+    }
+
+    .filter{
+        width:100%;
+    }
+
+    .order{
+        padding:15px;
+    }
+
+    .order-top{
+        flex-direction:column;
+    }
+
+    .order-customer{
+        grid-template-columns:1fr;
+    }
+
+    .order-bottom{
+        align-items:stretch;
+        flex-direction:column;
+    }
+
+    .order-actions{
+        width:100%;
+    }
+
+    .action-btn{
+        flex:1;
+    }
+
+    .customer-grid{
+        grid-template-columns:1fr;
+    }
+
+    .status-change{
+        flex-direction:column;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+<div class="container header-inner">
+
+<div class="logo">
+
+<img
+src="mata-logo.jpg"
+alt="Mata Маркет">
+
+<span>
+Mata Маркет
+</span>
+
+</div>
+
+
+<div class="header-actions">
+
+<button
+class="header-btn"
+onclick="loadOrders()">
+
+🔄 Обновить
+
+</button>
+
+
+<a
+class="header-btn"
+href="index.html">
+
+🛍️ Магазин
+
+</a>
+
+</div>
+
+</div>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main>
+
+<div class="container">
+
+
+<div class="page-title">
+
+<h1>
+🛒 Заказы
+</h1>
+
+<p>
+Панель управления заказами Mata Маркет
+</p>
+
+</div>
+
+
+<!-- ================= STATS ================= -->
+
+<div class="stats">
+
+<div class="stat">
+
+<div class="stat-top">
+
+<div class="stat-label">
+Всего заказов
+</div>
+
+<div class="stat-icon">
+🛒
+</div>
+
+</div>
+
+<div
+class="stat-value"
+id="totalOrders">
+
+0
+
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-top">
+
+<div class="stat-label">
+Новые
+</div>
+
+<div class="stat-icon">
+🟡
+</div>
+
+</div>
+
+<div
+class="stat-value"
+id="newOrders">
+
+0
+
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-top">
+
+<div class="stat-label">
+Выполнено
+</div>
+
+<div class="stat-icon">
+✅
+</div>
+
+</div>
+
+<div
+class="stat-value"
+id="completedOrders">
+
+0
+
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-top">
+
+<div class="stat-label">
+Сумма заказов
+</div>
+
+<div class="stat-icon">
+💰
+</div>
+
+</div>
+
+<div
+class="stat-value"
+id="totalRevenue">
+
+0 ₸
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= TOOLBAR ================= -->
+
+<div class="toolbar">
+
+<div class="search">
+
+<span>
+🔎
+</span>
+
+<input
+id="search"
+type="search"
+placeholder="Поиск по имени, телефону или номеру заказа..."
+oninput="renderOrders()">
+
+</div>
+
+
+<select
+class="filter"
+id="statusFilter"
+onchange="renderOrders()">
+
+<option value="all">
+Все статусы
+</option>
+
+<option value="Новый">
+🟡 Новый
+</option>
+
+<option value="В обработке">
+🔵 В обработке
+</option>
+
+<option value="Собран">
+🟠 Собран
+</option>
+
+<option value="Отправлен">
+🚚 Отправлен
+</option>
+
+<option value="Выполнен">
+🟢 Выполнен
+</option>
+
+<option value="Отменён">
+🔴 Отменён
+</option>
+
+</select>
+
+</div>
+
+
+<!-- ================= ORDERS ================= -->
+
+<div
+class="orders"
+id="orders">
+
+<div class="empty">
+
+<div class="empty-icon">
+⏳
+</div>
+
+Загрузка заказов...
+
+</div>
+
+</div>
+
+
+</div>
+
+</main>
+
+
+<!-- ================= ORDER MODAL ================= -->
+
+<div
+class="modal"
+id="orderModal">
+
+<div class="modal-box">
+
+<div class="modal-header">
+
+<h2 id="modalTitle">
+Заказ
+</h2>
+
+<button
+class="close"
+onclick="closeModal()">
+
+✕
+
+</button>
+
+</div>
+
+
+<div id="modalContent">
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= TOAST ================= -->
+
+<div
+class="toast"
+id="toast">
+
+Готово
+
+</div>
+
+
+<!-- ================= SUPABASE ================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+/* =====================================================
+   SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+    "https://jcdghaehpdrawxoetqmm.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_t5zOzDbKIghdy0r9hzukNQ_AmmdZZ8O";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* =====================================================
+   STATE
+===================================================== */
+
+let orders = [];
+
+let selectedOrder = null;
+
+
+/* =====================================================
+   LOAD ORDERS
+===================================================== */
+
+async function loadOrders(){
+
+    const container =
+        document.getElementById("orders");
+
+
+    container.innerHTML = `
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                ⏳
+            </div>
+
+            Загружаем заказы...
+
+        </div>
+
+    `;
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+        .from("orders")
+        .select("*")
+        .order("created_at", {
+            ascending:false
+        });
+
+
+    if(error){
+
+        console.error(error);
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    ❌
+                </div>
+
+                <strong>
+                    Не удалось загрузить заказы
+                </strong>
+
+                <p style="margin-top:8px">
+                    ${escapeHtml(error.message)}
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    orders = data || [];
+
+    updateStats();
+
+    renderOrders();
+
+}
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+function renderOrders(){
+
+    const container =
+        document.getElementById("orders");
+
+
+    const search =
+        document
+        .getElementById("search")
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const status =
+        document
+        .getElementById("statusFilter")
+        .value;
+
+
+    const filtered =
+        orders.filter(order => {
+
+            const text = `
+
+                ${order.id || ""}
+
+                ${order.customer_name || ""}
+
+                ${order.customer_phone || ""}
+
+            `.toLowerCase();
+
+
+            const matchesSearch =
+                !search ||
+                text.includes(search);
+
+
+            const matchesStatus =
+                status === "all" ||
+                order.status === status;
+
+
+            return (
+                matchesSearch &&
+                matchesStatus
+            );
+
+        });
+
+
+    if(filtered.length === 0){
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    📭
+                </div>
+
+                Заказы не найдены.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        filtered
+        .map(order => orderCard(order))
+        .join("");
+
+}
+
+
+/* =====================================================
+   ORDER CARD
+===================================================== */
+
+function orderCard(order){
+
+    const isNew =
+        order.status === "Новый";
+
+
+    const items =
+        Array.isArray(order.items)
+        ? order.items
+        : [];
+
+
+    const itemText =
+        items.length
+        ? items
+            .map(
+                item =>
+                    `${item.name} × ${item.quantity}`
+            )
+            .join(", ")
+        : "Товары не указаны";
+
+
+    return `
+
+        <div
+        class="order ${isNew ? "new" : ""}">
+
+            <div class="order-top">
+
+                <div>
+
+                    <div class="order-number">
+
+                        #${escapeHtml(
+                            String(order.id)
+                        )}
+
+                    </div>
+
+                    <div class="order-date">
+
+                        ${formatDate(
+                            order.created_at
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                ${statusBadge(
+                    order.status
+                )}
+
+            </div>
+
+
+            <div class="order-customer">
+
+                <div class="info">
+
+                    <small>
+                        👤 Покупатель
+                    </small>
+
+                    <strong>
+                        ${escapeHtml(
+                            order.customer_name || "—"
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="info">
+
+                    <small>
+                        📞 Телефон
+                    </small>
+
+                    <strong>
+                        ${escapeHtml(
+                            order.customer_phone || "—"
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="info">
+
+                    <small>
+                        🚚 Доставка
+                    </small>
+
+                    <strong>
+                        ${escapeHtml(
+                            order.delivery_type || "—"
+                        )}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div
+            style="
+            margin-top:12px;
+            color:#70727d;
+            font-size:14px;
+            ">
+
+                📦 ${escapeHtml(
+                    itemText
+                )}
+
+            </div>
+
+
+            <div class="order-bottom">
+
+                <div>
+
+                    <div
+                    style="
+                    color:#70727d;
+                    font-size:12px;
+                    ">
+
+                        Сумма
+
+                    </div>
+
+                    <div class="order-total">
+
+                        ${formatPrice(
+                            Number(order.total) || 0
+                        )} ₸
+
+                    </div>
+
+                </div>
+
+
+                <div class="order-actions">
+
+                    <button
+                    class="action-btn view-btn"
+                    onclick="openOrder(
+                        '${escapeJs(
+                            String(order.id)
+                        )}'
+                    )">
+
+                        👁 Открыть
+
+                    </button>
+
+
+                    <button
+                    class="action-btn delete-btn"
+                    onclick="deleteOrder(
+                        '${escapeJs(
+                            String(order.id)
+                        )}'
+                    )">
+
+                        🗑️ Удалить
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   STATUS BADGE
+===================================================== */
+
+function statusBadge(status){
+
+    const classes = {
+
+        "Новый":
+            "status-new",
+
+        "В обработке":
+            "status-processing",
+
+        "Собран":
+            "status-collected",
+
+        "Отправлен":
+            "status-shipped",
+
+        "Выполнен":
+            "status-completed",
+
+        "Отменён":
+            "status-cancelled"
+
+    };
+
+
+    const icons = {
+
+        "Новый":"🟡",
+
+        "В обработке":"🔵",
+
+        "Собран":"🟠",
+
+        "Отправлен":"🚚",
+
+        "Выполнен":"🟢",
+
+        "Отменён":"🔴"
+
+    };
+
+
+    return `
+
+        <span
+        class="status ${
+            classes[status] ||
+            "status-processing"
+        }">
+
+            ${icons[status] || "⚪"}
+
+            ${escapeHtml(
+                status || "Без статуса"
+            )}
+
+        </span>
+
+    `;
+
+}
+
+
+/* =====================================================
+   OPEN ORDER
+===================================================== */
+
+function openOrder(id){
+
+    selectedOrder =
+        orders.find(
+            order =>
+                String(order.id) ===
+                String(id)
+        );
+
+
+    if(!selectedOrder){
+
+        return;
+
+    }
+
+
+    const order =
+        selectedOrder;
+
+
+    const items =
+        Array.isArray(order.items)
+        ? order.items
+        : [];
+
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+        `Заказ #${order.id}`;
+
+
+    document.getElementById(
+        "modalContent"
+    ).innerHTML = `
+
+        <div>
+
+            ${statusBadge(
+                order.status
+            )}
+
+        </div>
+
+
+        <div class="modal-section">
+
+            <h3>
+                👤 Покупатель
+            </h3>
+
+
+            <div class="customer-grid">
+
+                <div class="detail">
+
+                    <small>
+                        Имя
+                    </small>
+
+                    <strong>
+                        ${escapeHtml(
+                            order.customer_name || "—"
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <small>
+                        Телефон
+                    </small>
+
+                    <strong>
+                        ${escapeHtml(
+                            order.customer_phone || "—"
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <small>
+                        Способ получения
+                    </small>
+
+                    <strong>
+                        ${escapeHtml(
+                            order.delivery_type || "—"
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <small>
+                        Адрес
+                    </small>
+
+                    <strong>
+                        ${escapeHtml(
+                            order.delivery_address || "—"
+                        )}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-section">
+
+            <h3>
+                📦 Товары
+            </h3>
+
+
+            <div class="items">
+
+                ${
+                    items.length
+
+                    ?
+
+                    items.map(item => `
+
+                        <div class="item">
+
+                            <div>
+
+                                <div class="item-name">
+
+                                    ${escapeHtml(
+                                        item.icon || "📦"
+                                    )}
+
+                                    ${escapeHtml(
+                                        item.name || "Товар"
+                                    )}
+
+                                </div>
+
+                                <div class="item-meta">
+
+                                    ${formatPrice(
+                                        Number(item.price) || 0
+                                    )} ₸ ×
+                                    ${item.quantity || 1}
+
+                                </div>
+
+                            </div>
+
+
+                            <strong>
+
+                                ${formatPrice(
+                                    (Number(item.price) || 0) *
+                                    (Number(item.quantity) || 1)
+                                )} ₸
+
+                            </strong>
+
+                        </div>
+
+                    `).join("")
+
+                    :
+
+                    "<p>Товары отсутствуют.</p>"
+                }
+
+            </div>
+
+
+            <div class="modal-total">
+
+                <span>
+                    Итого
+                </span>
+
+                <strong>
+
+                    ${formatPrice(
+                        Number(order.total) || 0
+                    )} ₸
+
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-section">
+
+            <h3>
+                💬 Комментарий
+            </h3>
+
+            <div class="detail">
+
+                ${escapeHtml(
+                    order.comment || "Нет комментария"
+                )}
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-section">
+
+            <h3>
+                ✏️ Изменить статус
+            </h3>
+
+            <div class="status-change">
+
+                <select id="newStatus">
+
+                    <option
+                    ${order.status === "Новый" ? "selected" : ""}>
+                        Новый
+                    </option>
+
+                    <option
+                    ${order.status === "В обработке" ? "selected" : ""}>
+                        В обработке
+                    </option>
+
+                    <option
+                    ${order.status === "Собран" ? "selected" : ""}>
+                        Собран
+                    </option>
+
+                    <option
+                    ${order.status === "Отправлен" ? "selected" : ""}>
+                        Отправлен
+                    </option>
+
+                    <option
+                    ${order.status === "Выполнен" ? "selected" : ""}>
+                        Выполнен
+                    </option>
+
+                    <option
+                    ${order.status === "Отменён" ? "selected" : ""}>
+                        Отменён
+                    </option>
+
+                </select>
+
+
+                <button
+                class="save-btn"
+                onclick="updateStatus()">
+
+                    💾 Сохранить
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    document
+        .getElementById("orderModal")
+        .classList.add("active");
+
+}
+
+
+/* =====================================================
+   UPDATE STATUS
+===================================================== */
+
+async function updateStatus(){
+
+    if(!selectedOrder){
+
+        return;
+
+    }
+
+
+    const status =
+        document
+        .getElementById("newStatus")
+        .value;
+
+
+    const {
+        error
+    } =
+        await supabaseClient
+        .from("orders")
+        .update({
+            status:status
+        })
+        .eq(
+            "id",
+            selectedOrder.id
+        );
+
+
+    if(error){
+
+        console.error(error);
+
+        showToast(
+            "❌ Не удалось изменить статус"
+        );
+
+        return;
+
+    }
+
+
+    selectedOrder.status = status;
+
+
+    const index =
+        orders.findIndex(
+            order =>
+                String(order.id) ===
+                String(selectedOrder.id)
+        );
+
+
+    if(index !== -1){
+
+        orders[index].status = status;
+
+    }
+
+
+    updateStats();
+
+    renderOrders();
+
+    showToast(
+        "✅ Статус изменён"
+    );
+
+
+    closeModal();
+
+}
+
+
+/* =====================================================
+   DELETE
+===================================================== */
+
+async function deleteOrder(id){
+
+    const order =
+        orders.find(
+            item =>
+                String(item.id) ===
+                String(id)
+        );
+
+
+    if(!order){
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            `Удалить заказ #${order.id}?\n\n` +
+            `Покупатель: ${order.customer_name || "—"}\n` +
+            `Сумма: ${formatPrice(
+                Number(order.total) || 0
+            )} ₸`
+        );
+
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+
+    const {
+        error
+    } =
+        await supabaseClient
+        .from("orders")
+        .delete()
+        .eq(
+            "id",
+            id
+        );
+
+
+    if(error){
+
+        console.error(error);
+
+        showToast(
+            "❌ Не удалось удалить заказ"
+        );
+
+        return;
+
+    }
+
+
+    orders =
+        orders.filter(
+            item =>
+                String(item.id) !==
+                String(id)
+        );
+
+
+    updateStats();
+
+    renderOrders();
+
+    showToast(
+        "🗑️ Заказ удалён"
+    );
+
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+function updateStats(){
+
+    const total =
+        orders.length;
+
+
+    const newCount =
+        orders.filter(
+            order =>
+                order.status === "Новый"
+        ).length;
+
+
+    const completed =
+        orders.filter(
+            order =>
+                order.status === "Выполнен"
+        ).length;
+
+
+    const revenue =
+        orders.reduce(
+            (sum,order) =>
+                sum +
+                (
+                    Number(order.total) || 0
+                ),
+            0
+        );
+
+
+    document.getElementById(
+        "totalOrders"
+    ).textContent =
+        total;
+
+
+    document.getElementById(
+        "newOrders"
+    ).textContent =
+        newCount;
+
+
+    document.getElementById(
+        "completedOrders"
+    ).textContent =
+        completed;
+
+
+    document.getElementById(
+        "totalRevenue"
+    ).textContent =
+        formatPrice(revenue) +
+        " ₸";
+
+}
+
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function formatPrice(value){
+
+    return new Intl.NumberFormat(
+        "ru-RU"
+    ).format(value);
+
+}
+
+
+function formatDate(value){
+
+    if(!value){
+
+        return "Дата неизвестна";
+
+    }
+
+
+    const date =
+        new Date(value);
+
+
+    return date.toLocaleString(
+        "ru-RU",
+        {
+            day:"2-digit",
+            month:"2-digit",
+            year:"numeric",
+            hour:"2-digit",
+            minute:"2-digit"
+        }
+    );
+
+}
+
+
+function escapeHtml(value){
+
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+function escapeJs(value){
+
+    return String(value)
+        .replaceAll("\\","\\\\")
+        .replaceAll("'","\\'")
+        .replaceAll("\n","\\n")
+        .replaceAll("\r","\\r");
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+let toastTimer;
+
+
+function showToast(message){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            () => {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2500
+        );
+
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+function closeModal(){
+
+    document
+        .getElementById("orderModal")
+        .classList.remove("active");
+
+    selectedOrder = null;
+
+}
+
+
+document
+.getElementById("orderModal")
+.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target === this
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadOrders();
+
+
+/* Автообновление каждые 30 секунд */
+
+setInterval(
+    loadOrders,
+    30000
+);
+
+</script>
+
+</body>
+</html>
