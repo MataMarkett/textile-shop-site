@@ -306,15 +306,17 @@ section {
 
 .product-gallery img {
     width: 100%;
-    height: 70px;
+    height: 75px;
     object-fit: cover;
     border-radius: 10px;
     border: 1px solid var(--border);
-    transition: transform 0.2s;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
 }
 
 .product-gallery img:hover {
-    transform: scale(1.05);
+    transform: scale(1.06);
+    border-color: var(--blue);
 }
 
 .product-price {
@@ -580,6 +582,30 @@ section {
     color: var(--gray);
 }
 
+/* LIGHTBOX MODAL */
+.lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.85);
+    z-index: 3000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox img {
+    max-width: 90vw;
+    max-height: 85vh;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,.5);
+    object-fit: contain;
+}
+
 /* SUCCESS */
 .success {
     position: fixed;
@@ -678,7 +704,7 @@ footer {
 <header>
 <div class="container nav">
     <a href="#" class="brand">
-        <img src="mata-logo.jpg" class="brand-logo" alt="Mata Маркет">
+        <img src="mata-logo.jpg" class="brand-logo" alt="Mata Маркет" onerror="this.style.display='none'">
         <span>Mata Маркет</span>
     </a>
 
@@ -713,7 +739,7 @@ footer {
         </div>
     </div>
     <div class="hero-logo">
-        <img src="mata-logo.jpg" alt="Mata Маркет">
+        <img src="mata-logo.jpg" alt="Mata Маркет" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=500&q=80'">
     </div>
 </div>
 </section>
@@ -824,6 +850,11 @@ footer {
 </div>
 </div>
 
+<!-- LIGHTBOX FOR IMAGES -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <img id="lightboxImg" src="" alt="Просмотр">
+</div>
+
 <!-- SUCCESS MODAL -->
 <div class="success" id="success">
 <div class="success-box">
@@ -843,6 +874,13 @@ const SUPABASE_URL = "https://jcdghaehpdrawxoetqmm.supabase.co";
 const SUPABASE_KEY = "sb_publishable_t5zOzDbKIghdy0r9hzukNQ_AmmdZZ8O";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+/* ФОТО-ЗАГЛУШКИ, ЕСЛИ ФАЙЛЫ НЕ НАЙДЕНЫ */
+const fallbackImages = [
+    "https://images.unsplash.com/photo-1616627547584-bf28cee262db?auto=format&fit=crop&w=400&q=80",
+    "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=400&q=80",
+    "https://images.unsplash.com/photo-1616627561839-074385245ff6?auto=format&fit=crop&w=400&q=80"
+];
+
 /* PRODUCTS DATA */
 const products = [
     { id: "fabric", name: "Ткани", icon: "🧵", description: "Различные виды тканей для дома, одежды, шитья и декора.", price: 3000 },
@@ -851,9 +889,9 @@ const products = [
         id: "towels", 
         name: "Полотенца", 
         icon: "🛁", 
-        description: "Мягкие полотенца для ванной, кухни и всей семьи.", 
+        description: "Мягкие махровые полотенца для ванной, кухни и всей семьи.", 
         price: 2500,
-        images: ["polotence 1.jpg", "polotence 2.jpg", "polotence 3.jpg"] 
+        images: ["polotence-1.jpg", "polotence-2.jpg", "polotence-3.jpg"] 
     },
     { id: "bed", name: "Постельное бельё", icon: "🛏️", description: "Пододеяльники, простыни и товары для комфортного сна.", price: 8000 },
     { id: "pillows", name: "Подушки", icon: "🛋️", description: "Уютные подушки для отдыха и оформления интерьера.", price: 4000 },
@@ -870,7 +908,12 @@ function renderCatalog() {
     catalog.innerHTML = products.map(product => {
         const galleryHtml = product.images && product.images.length > 0 
             ? `<div class="product-gallery">
-                ${product.images.map(img => `<img src="${escapeHtml(img)}" alt="${escapeHtml(product.name)}">`).join('')}
+                ${product.images.map((img, index) => `
+                    <img src="${escapeHtml(img)}" 
+                         alt="${escapeHtml(product.name)}" 
+                         onerror="this.onerror=null; this.src='${fallbackImages[index % fallbackImages.length]}';"
+                         onclick="openLightbox(this.src)">
+                `).join('')}
                </div>` 
             : '';
 
@@ -887,6 +930,16 @@ function renderCatalog() {
             </div>
         `;
     }).join("");
+}
+
+/* LIGHTBOX FOR BIGGER IMAGES */
+function openLightbox(src) {
+    document.getElementById("lightboxImg").src = src;
+    document.getElementById("lightbox").classList.add("active");
+}
+
+function closeLightbox() {
+    document.getElementById("lightbox").classList.remove("active");
 }
 
 /* CART ACTIONS */
