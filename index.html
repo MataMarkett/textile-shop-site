@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mata Маркет — Магазин</title>
-<meta name="description" content="Mata Маркет — товары для дома, ткани, фурнитура, текстиль и посуда.">
+
+<title>Mata Маркет — Товары для дома</title>
+
+<meta name="description" content="Mata Маркет — ткани, фурнитура, полотенца, текстиль, посуда и товары для дома.">
 
 <style>
 * {
@@ -16,6 +18,7 @@
 :root {
     --blue: #5b59e8;
     --blue-dark: #4140c7;
+    --blue-light: #eeeeff;
     --green: #b8df38;
     --dark: #202126;
     --gray: #70727d;
@@ -23,6 +26,7 @@
     --white: #fff;
     --border: #e7e7ee;
     --red: #dc2626;
+    --success: #16a34a;
 }
 
 html {
@@ -36,7 +40,14 @@ body {
     line-height: 1.5;
 }
 
-button, input, select, textarea {
+body.no-scroll {
+    overflow: hidden;
+}
+
+button,
+input,
+select,
+textarea {
     font: inherit;
 }
 
@@ -59,12 +70,13 @@ img {
     margin: auto;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
+
 header {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: rgba(255, 255, 255, .96);
+    background: rgba(255,255,255,.96);
     backdrop-filter: blur(15px);
     border-bottom: 1px solid var(--border);
 }
@@ -83,6 +95,7 @@ header {
     gap: 11px;
     font-size: 21px;
     font-weight: 800;
+    white-space: nowrap;
 }
 
 .brand-logo {
@@ -98,6 +111,10 @@ header {
     font-weight: 600;
 }
 
+.nav-links a {
+    transition: .2s;
+}
+
 .nav-links a:hover {
     color: var(--blue);
 }
@@ -108,7 +125,8 @@ header {
     align-items: center;
 }
 
-.phone-btn, .cart-btn {
+.phone-btn,
+.cart-btn {
     border: 0;
     border-radius: 12px;
     padding: 12px 16px;
@@ -125,17 +143,22 @@ header {
 }
 
 .cart-btn {
-    background: #eeeeff;
+    background: var(--blue-light);
     color: var(--blue);
     position: relative;
+}
+
+.cart-btn:hover {
+    background: #e2e2ff;
 }
 
 .cart-count {
     position: absolute;
     top: -7px;
     right: -7px;
-    min-width: 21px;
-    height: 21px;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 5px;
     border-radius: 50%;
     background: var(--red);
     color: white;
@@ -145,10 +168,11 @@ header {
     justify-content: center;
 }
 
-/* HERO */
+/* ================= HERO ================= */
+
 .hero {
     padding: 80px 0;
-    background: 
+    background:
         radial-gradient(circle at 85% 20%, rgba(91,89,232,.20), transparent 35%),
         radial-gradient(circle at 10% 80%, rgba(184,223,56,.18), transparent 30%);
 }
@@ -162,7 +186,7 @@ header {
 
 .badge {
     display: inline-block;
-    background: #e9e9ff;
+    background: var(--blue-light);
     color: var(--blue-dark);
     padding: 8px 15px;
     border-radius: 50px;
@@ -203,6 +227,7 @@ h1 span {
     align-items: center;
     justify-content: center;
     font-weight: bold;
+    transition: .2s;
 }
 
 .btn-primary {
@@ -212,11 +237,17 @@ h1 span {
 
 .btn-primary:hover {
     background: var(--blue-dark);
+    transform: translateY(-1px);
 }
 
 .btn-secondary {
     background: white;
     border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+    border-color: var(--blue);
+    color: var(--blue);
 }
 
 .hero-logo {
@@ -232,7 +263,8 @@ h1 span {
     box-shadow: 0 30px 70px rgba(0,0,0,.18);
 }
 
-/* SECTIONS */
+/* ================= SECTIONS ================= */
+
 section {
     padding: 80px 0;
 }
@@ -250,81 +282,198 @@ section {
     margin: 0 auto 40px;
 }
 
-/* PRODUCTS */
+/* ================= CATEGORY MENU ================= */
+
+.category-wrapper {
+    margin-bottom: 38px;
+}
+
+.categories {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.category-btn {
+    border: 1px solid var(--border);
+    background: white;
+    color: var(--dark);
+    border-radius: 50px;
+    padding: 12px 18px;
+    font-weight: 700;
+    transition: .2s;
+}
+
+.category-btn:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+    transform: translateY(-1px);
+}
+
+.category-btn.active {
+    background: var(--blue);
+    color: white;
+    border-color: var(--blue);
+    box-shadow: 0 8px 20px rgba(91,89,232,.22);
+}
+
+/* ================= CATEGORY TITLE ================= */
+
+.current-category {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.current-category h3 {
+    font-size: 26px;
+}
+
+.current-category span {
+    color: var(--gray);
+    font-size: 14px;
+}
+
+/* ================= PRODUCTS ================= */
+
 .catalog {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 17px;
+    gap: 18px;
 }
 
 .product {
     background: white;
     border: 1px solid var(--border);
-    border-radius: 22px;
-    padding: 23px;
-    box-shadow: 0 8px 25px rgba(0,0,0,.03);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,.035);
     transition: .25s;
     display: flex;
     flex-direction: column;
 }
 
 .product:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0,0,0,.08);
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(0,0,0,.09);
 }
 
-.product-icon {
-    width: 58px;
-    height: 58px;
-    border-radius: 16px;
-    background: #eeeeff;
+.product-image-wrap {
+    position: relative;
+    background: #f2f2f8;
+    aspect-ratio: 1 / .86;
+    overflow: hidden;
+}
+
+.product-main-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .35s;
+}
+
+.product:hover .product-main-image {
+    transform: scale(1.04);
+}
+
+.product-image-placeholder {
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 29px;
-    margin-bottom: 15px;
+    font-size: 70px;
+    background: linear-gradient(135deg,#eeeeff,#f7f7fb);
+}
+
+.product-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--blue);
+    color: white;
+    border-radius: 50px;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.product-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.product-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: var(--blue-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 12px;
 }
 
 .product h3 {
-    font-size: 19px;
-    margin-bottom: 5px;
+    font-size: 20px;
+    margin-bottom: 6px;
 }
 
 .product-description {
     color: var(--gray);
     font-size: 14px;
-    min-height: 44px;
+    line-height: 1.55;
+    min-height: 45px;
 }
 
-/* GALLERY IN PRODUCT */
 .product-gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
+    display: flex;
+    gap: 7px;
     margin-top: 15px;
 }
 
 .product-gallery img {
-    width: 100%;
-    height: 75px;
+    width: 55px;
+    height: 55px;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 9px;
     border: 1px solid var(--border);
     cursor: pointer;
-    transition: transform 0.2s, border-color 0.2s;
+    transition: .2s;
 }
 
 .product-gallery img:hover {
-    transform: scale(1.06);
     border-color: var(--blue);
+    transform: scale(1.04);
+}
+
+.product-bottom {
+    margin-top: auto;
+    padding-top: 18px;
 }
 
 .product-price {
-    margin-top: auto;
-    padding-top: 13px;
-    font-size: 18px;
-    font-weight: 800;
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    margin-bottom: 12px;
+}
+
+.price-number {
+    font-size: 23px;
+    font-weight: 900;
     color: var(--blue);
+}
+
+.price-unit {
+    color: var(--gray);
+    font-size: 13px;
 }
 
 .add-btn {
@@ -332,17 +481,68 @@ section {
     border: 0;
     background: var(--dark);
     color: white;
-    border-radius: 11px;
-    padding: 11px;
-    margin-top: 13px;
+    border-radius: 12px;
+    padding: 13px;
     font-weight: bold;
+    transition: .2s;
 }
 
 .add-btn:hover {
     background: var(--blue);
 }
 
-/* ABOUT */
+.add-btn.added {
+    background: var(--success);
+}
+
+/* ================= TOWELS SPECIAL ================= */
+
+.towels-banner {
+    margin-bottom: 25px;
+    border-radius: 25px;
+    padding: 25px;
+    background:
+        linear-gradient(135deg, rgba(91,89,232,.95), rgba(65,64,199,.95));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    box-shadow: 0 15px 35px rgba(91,89,232,.20);
+}
+
+.towels-banner h3 {
+    font-size: 26px;
+    margin-bottom: 4px;
+}
+
+.towels-banner p {
+    color: rgba(255,255,255,.82);
+}
+
+.towels-price {
+    flex-shrink: 0;
+    background: white;
+    color: var(--blue);
+    padding: 12px 18px;
+    border-radius: 14px;
+    font-size: 22px;
+    font-weight: 900;
+}
+
+/* ================= EMPTY ================= */
+
+.empty-products {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    text-align: center;
+    padding: 50px 20px;
+    color: var(--gray);
+}
+
+/* ================= ABOUT ================= */
+
 .about-box {
     background: var(--dark);
     color: white;
@@ -351,6 +551,11 @@ section {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 35px;
+}
+
+.about-box .badge {
+    background: rgba(255,255,255,.10);
+    color: #fff;
 }
 
 .about-box p {
@@ -377,7 +582,8 @@ section {
     margin-top: 5px;
 }
 
-/* CONTACTS */
+/* ================= CONTACTS ================= */
+
 .contacts {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -411,7 +617,8 @@ section {
     color: var(--gray);
 }
 
-/* CART */
+/* ================= CART ================= */
+
 .cart-overlay {
     position: fixed;
     inset: 0;
@@ -428,7 +635,7 @@ section {
     position: absolute;
     right: 0;
     top: 0;
-    width: min(500px, 100%);
+    width: min(500px,100%);
     height: 100%;
     background: white;
     padding: 25px;
@@ -452,6 +659,10 @@ section {
     background: #f0f0f5;
     border-radius: 10px;
     font-size: 20px;
+}
+
+.close-btn:hover {
+    background: #e5e5eb;
 }
 
 .cart-items {
@@ -478,6 +689,7 @@ section {
 .cart-item-price {
     color: var(--blue);
     font-weight: bold;
+    white-space: nowrap;
 }
 
 .quantity {
@@ -492,15 +704,19 @@ section {
     height: 32px;
     border: 0;
     border-radius: 8px;
-    background: #eeeeff;
+    background: var(--blue-light);
     color: var(--blue);
     font-weight: bold;
 }
 
+.quantity button:hover {
+    background: #dedfff;
+}
+
 .remove-btn {
     margin-left: auto;
-    background: #ffe8e8!important;
-    color: var(--red)!important;
+    background: #ffe8e8 !important;
+    color: var(--red) !important;
 }
 
 .cart-total {
@@ -582,7 +798,8 @@ section {
     color: var(--gray);
 }
 
-/* LIGHTBOX MODAL */
+/* ================= LIGHTBOX ================= */
+
 .lightbox {
     position: fixed;
     inset: 0;
@@ -606,7 +823,20 @@ section {
     object-fit: contain;
 }
 
-/* SUCCESS */
+.lightbox-close {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    border: 0;
+    border-radius: 50%;
+    background: white;
+    font-size: 20px;
+}
+
+/* ================= SUCCESS ================= */
+
 .success {
     position: fixed;
     inset: 0;
@@ -623,7 +853,7 @@ section {
 }
 
 .success-box {
-    width: min(430px, 100%);
+    width: min(430px,100%);
     background: white;
     border-radius: 24px;
     padding: 35px;
@@ -644,7 +874,8 @@ section {
     margin-bottom: 20px;
 }
 
-/* FOOTER */
+/* ================= FOOTER ================= */
+
 footer {
     background: #17181d;
     color: #aaa;
@@ -663,542 +894,2047 @@ footer {
     font-weight: bold;
 }
 
-/* RESPONSIVE */
-@media(max-width:1000px){
-    .catalog { grid-template-columns: repeat(2, 1fr); }
-    .hero-grid { grid-template-columns: 1fr; text-align: center; }
-    .hero-text { margin-left: auto; margin-right: auto; }
-    .buttons { justify-content: center; }
-    .hero-logo { order: -1; }
+/* ================= TOAST ================= */
+
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 25px;
+    transform: translate(-50%, 100px);
+    background: var(--dark);
+    color: white;
+    padding: 13px 18px;
+    border-radius: 12px;
+    z-index: 5000;
+    opacity: 0;
+    transition: .3s;
+    pointer-events: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,.2);
 }
 
-@media(max-width:700px){
-    .container { width: calc(100% - 24px); }
-    .nav { min-height: 65px; }
-    .brand { font-size: 17px; }
-    .brand-logo { width: 42px; height: 42px; }
-    .nav-links, .phone-btn { display: none; }
-    .hero { padding: 50px 0 60px; }
-    .hero-logo img { width: 230px; }
-    .hero-text { font-size: 15px; }
-    section { padding: 55px 0; }
-    .catalog { grid-template-columns: 1fr; }
-    .about-box { grid-template-columns: 1fr; padding: 25px 20px; }
-    .advantages { grid-template-columns: 1fr; }
-    .contacts { grid-template-columns: 1fr; }
-    .contact-card { padding: 23px 20px; }
-    .footer-content { flex-direction: column; }
-    .header-actions { margin-left: auto; }
+.toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
 }
 
-@media(max-width:400px){
-    .brand span { display: none; }
-    .cart-btn { padding: 10px 12px; }
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1000px) {
+    .catalog {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .hero-text {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .buttons {
+        justify-content: center;
+    }
+
+    .hero-logo {
+        order: -1;
+    }
+}
+
+@media(max-width:700px) {
+    .container {
+        width: calc(100% - 24px);
+    }
+
+    .nav {
+        min-height: 65px;
+    }
+
+    .brand {
+        font-size: 17px;
+    }
+
+    .brand-logo {
+        width: 42px;
+        height: 42px;
+    }
+
+    .nav-links,
+    .phone-btn {
+        display: none;
+    }
+
+    .hero {
+        padding: 50px 0 60px;
+    }
+
+    .hero-logo img {
+        width: 230px;
+    }
+
+    .hero-text {
+        font-size: 15px;
+    }
+
+    section {
+        padding: 55px 0;
+    }
+
+    .catalog {
+        grid-template-columns: 1fr;
+    }
+
+    .categories {
+        justify-content: flex-start;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding: 3px 2px 10px;
+        scrollbar-width: none;
+    }
+
+    .categories::-webkit-scrollbar {
+        display: none;
+    }
+
+    .category-btn {
+        flex-shrink: 0;
+    }
+
+    .current-category {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .towels-banner {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .about-box {
+        grid-template-columns: 1fr;
+        padding: 25px 20px;
+    }
+
+    .advantages {
+        grid-template-columns: 1fr;
+    }
+
+    .contacts {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-card {
+        padding: 23px 20px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+    }
+
+    .header-actions {
+        margin-left: auto;
+    }
+}
+
+@media(max-width:400px) {
+    .brand span {
+        display: none;
+    }
+
+    .cart-btn {
+        padding: 10px 12px;
+    }
+
+    .product-body {
+        padding: 17px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
+<!-- ================= HEADER ================= -->
+
 <header>
-<div class="container nav">
-    <a href="#" class="brand">
-        <img src="mata-logo.jpg" class="brand-logo" alt="Mata Маркет" onerror="this.style.display='none'">
-        <span>Mata Маркет</span>
-    </a>
+    <div class="container nav">
 
-    <nav class="nav-links">
-        <a href="#catalog">Каталог</a>
-        <a href="#about">О нас</a>
-        <a href="#contacts">Контакты</a>
-    </nav>
+        <a href="#" class="brand">
+            <img
+                src="mata-logo.jpg"
+                class="brand-logo"
+                alt="Mata Маркет"
+                onerror="this.style.display='none'"
+            >
+            <span>Mata Маркет</span>
+        </a>
 
-    <div class="header-actions">
-        <a href="tel:+77473220201" class="phone-btn">📞 Позвонить</a>
-        <button class="cart-btn" onclick="openCart()">
-            🛒 Корзина
-            <span class="cart-count" id="cartCount">0</span>
-        </button>
+        <nav class="nav-links">
+            <a href="#catalog">Каталог</a>
+            <a href="#about">О нас</a>
+            <a href="#contacts">Контакты</a>
+        </nav>
+
+        <div class="header-actions">
+
+            <a href="tel:+77473220201" class="phone-btn">
+                📞 Позвонить
+            </a>
+
+            <button class="cart-btn" onclick="openCart()">
+                🛒 Корзина
+                <span class="cart-count" id="cartCount">0</span>
+            </button>
+
+        </div>
     </div>
-</div>
 </header>
 
-<!-- HERO -->
+
+<!-- ================= HERO ================= -->
+
 <section class="hero">
-<div class="container hero-grid">
-    <div>
-        <span class="badge">ВСЁ ДЛЯ ДОМА В ОДНОМ МЕСТЕ</span>
-        <h1>Уют начинается с <span>Mata Маркет</span></h1>
-        <p class="hero-text">
-            Ткани, фурнитура, домашний текстиль, посуда, домашняя одежда и всё необходимое для красивого и уютного дома.
-        </p>
-        <div class="buttons">
-            <a href="#catalog" class="btn btn-primary">🛍️ Смотреть каталог</a>
-            <a href="https://instagram.com/matamarkett" target="_blank" rel="noopener" class="btn btn-secondary">📷 Instagram</a>
-        </div>
-    </div>
-    <div class="hero-logo">
-        <img src="mata-logo.jpg" alt="Mata Маркет" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=500&q=80'">
-    </div>
-</div>
-</section>
 
-<!-- CATALOG -->
-<section id="catalog">
-<div class="container">
-    <h2 class="section-title">Наш каталог</h2>
-    <p class="section-subtitle">Выберите нужный товар и добавьте его в корзину.</p>
-    <div class="catalog" id="catalogList"></div>
-</div>
-</section>
+    <div class="container hero-grid">
 
-<!-- ABOUT -->
-<section id="about">
-<div class="container">
-    <div class="about-box">
         <div>
-            <span class="badge">MATA МАРКЕТ</span>
-            <h2>Создаём уют вместе</h2>
-            <p>
-                У нас можно найти товары для дома, шитья, творчества и повседневной жизни. Выбирайте товары онлайн и оформляйте заказ.
+
+            <span class="badge">
+                ✨ ВСЁ ДЛЯ ДОМА В ОДНОМ МЕСТЕ
+            </span>
+
+            <h1>
+                Уют начинается с
+                <span>Mata Маркет</span>
+            </h1>
+
+            <p class="hero-text">
+                Ткани, фурнитура, домашний текстиль, посуда,
+                домашняя одежда и всё необходимое для красивого
+                и уютного дома.
             </p>
+
+            <div class="buttons">
+
+                <a href="#catalog" class="btn btn-primary">
+                    🛍️ Смотреть каталог
+                </a>
+
+                <a
+                    href="https://instagram.com/matamarkett"
+                    target="_blank"
+                    rel="noopener"
+                    class="btn btn-secondary"
+                >
+                    📷 Instagram
+                </a>
+
+            </div>
+
         </div>
-        <div class="advantages">
-            <div class="advantage">
-                <strong>🛍️ Большой выбор</strong>
-                <span>Текстиль, ткани, фурнитура, посуда и товары для дома.</span>
-            </div>
-            <div class="advantage">
-                <strong>📍 Магазин</strong>
-                <span>ТД «Достан», 1 этаж, 10 бутик.</span>
-            </div>
-            <div class="advantage">
-                <strong>🤝 Консультация</strong>
-                <span>Поможем подобрать подходящий товар.</span>
-            </div>
-            <div class="advantage">
-                <strong>📷 Instagram</strong>
-                <span>@matamarkett — новинки и информация.</span>
-            </div>
+
+        <div class="hero-logo">
+
+            <img
+                src="mata-logo.jpg"
+                alt="Mata Маркет"
+                onerror="
+                    this.onerror=null;
+                    this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=500&q=80'
+                "
+            >
+
         </div>
+
     </div>
-</div>
+
 </section>
 
-<!-- CONTACTS -->
+
+<!-- ================= CATALOG ================= -->
+
+<section id="catalog">
+
+    <div class="container">
+
+        <h2 class="section-title">
+            Каталог
+        </h2>
+
+        <p class="section-subtitle">
+            Выберите категорию и найдите нужные товары.
+        </p>
+
+
+        <!-- CATEGORY BUTTONS -->
+
+        <div class="category-wrapper">
+
+            <div class="categories" id="categoryButtons">
+
+                <button
+                    class="category-btn active"
+                    data-category="all"
+                    onclick="selectCategory('all')"
+                >
+                    🛍️ Все товары
+                </button>
+
+                <button
+                    class="category-btn"
+                    data-category="towels"
+                    onclick="selectCategory('towels')"
+                >
+                    🛁 Полотенца
+                </button>
+
+                <button
+                    class="category-btn"
+                    data-category="fabric"
+                    onclick="selectCategory('fabric')"
+                >
+                    🧵 Ткани
+                </button>
+
+                <button
+                    class="category-btn"
+                    data-category="accessories"
+                    onclick="selectCategory('accessories')"
+                >
+                    🪡 Фурнитура
+                </button>
+
+                <button
+                    class="category-btn"
+                    data-category="bed"
+                    onclick="selectCategory('bed')"
+                >
+                    🛏️ Постельное бельё
+                </button>
+
+                <button
+                    class="category-btn"
+                    data-category="pillows"
+                    onclick="selectCategory('pillows')"
+                >
+                    🛋️ Подушки
+                </button>
+
+                <button
+                    class="category-btn"
+                    data-category="dishes"
+                    onclick="selectCategory('dishes')"
+                >
+                    🍽️ Посуда
+                </button>
+
+                <button
+                    class="category-btn"
+                    data-category="clothes"
+                    onclick="selectCategory('clothes')"
+                >
+                    👕 Домашняя одежда
+                </button>
+
+                <button
+                    class="category-btn"
+                    data-category="home"
+                    onclick="selectCategory('home')"
+                >
+                    🏠 Для дома
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOWELS SPECIAL BANNER -->
+
+        <div
+            class="towels-banner"
+            id="towelsBanner"
+            style="display:none"
+        >
+
+            <div>
+
+                <h3>
+                    🛁 Полотенца
+                </h3>
+
+                <p>
+                    Выберите свой вариант. Все полотенца по 300 ₸ за штуку.
+                </p>
+
+            </div>
+
+            <div class="towels-price">
+                300 ₸ / шт.
+            </div>
+
+        </div>
+
+
+        <!-- CURRENT CATEGORY -->
+
+        <div class="current-category">
+
+            <h3 id="currentCategoryTitle">
+                Все товары
+            </h3>
+
+            <span id="productsCount"></span>
+
+        </div>
+
+
+        <!-- PRODUCTS -->
+
+        <div
+            class="catalog"
+            id="catalogList"
+        ></div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about">
+
+    <div class="container">
+
+        <div class="about-box">
+
+            <div>
+
+                <span class="badge">
+                    MATA МАРКЕТ
+                </span>
+
+                <h2>
+                    Создаём уют вместе
+                </h2>
+
+                <p>
+                    У нас можно найти товары для дома,
+                    шитья, творчества и повседневной жизни.
+                    Выбирайте товары онлайн и оформляйте заказ
+                    прямо через корзину.
+                </p>
+
+            </div>
+
+            <div class="advantages">
+
+                <div class="advantage">
+                    <strong>🛍️ Большой выбор</strong>
+                    <span>
+                        Текстиль, ткани, фурнитура,
+                        посуда и товары для дома.
+                    </span>
+                </div>
+
+                <div class="advantage">
+                    <strong>📍 Магазин</strong>
+                    <span>
+                        ТД «Достан», 1 этаж, 10 бутик.
+                    </span>
+                </div>
+
+                <div class="advantage">
+                    <strong>🤝 Консультация</strong>
+                    <span>
+                        Поможем подобрать подходящий товар.
+                    </span>
+                </div>
+
+                <div class="advantage">
+                    <strong>📷 Instagram</strong>
+                    <span>
+                        @matamarkett — новинки и информация.
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CONTACTS ================= -->
+
 <section id="contacts">
-<div class="container">
-    <h2 class="section-title">Контакты</h2>
-    <p class="section-subtitle">Будем рады видеть вас в Mata Маркет!</p>
-    <div class="contacts">
-        <div class="contact-card">
-            <h3>📍 Как нас найти</h3>
-            <div class="contact-item">
-                <div class="contact-icon">📍</div>
-                <div>
-                    <small>Адрес</small>
-                    <strong>ул. Ерназарова 47</strong><br>
-                    ТД «Достан», 1 этаж, 10 бутик
+
+    <div class="container">
+
+        <h2 class="section-title">
+            Контакты
+        </h2>
+
+        <p class="section-subtitle">
+            Будем рады видеть вас в Mata Маркет!
+        </p>
+
+        <div class="contacts">
+
+            <div class="contact-card">
+
+                <h3>
+                    📍 Как нас найти
+                </h3>
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        📍
+                    </div>
+
+                    <div>
+
+                        <small>
+                            Адрес
+                        </small>
+
+                        <strong>
+                            ул. Ерназарова 47
+                        </strong>
+
+                        <br>
+
+                        ТД «Достан», 1 этаж, 10 бутик
+
+                    </div>
+
                 </div>
-            </div>
-            <div class="contact-item">
-                <div class="contact-icon">📞</div>
-                <div>
-                    <small>Телефон</small>
-                    <strong><a href="tel:+77473220201">+7 747 322 02 01</a></strong>
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        📞
+                    </div>
+
+                    <div>
+
+                        <small>
+                            Телефон
+                        </small>
+
+                        <strong>
+                            <a href="tel:+77473220201">
+                                +7 747 322 02 01
+                            </a>
+                        </strong>
+
+                    </div>
+
                 </div>
+
             </div>
+
+
+            <div class="contact-card">
+
+                <h3>
+                    📷 Мы в Instagram
+                </h3>
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        📷
+                    </div>
+
+                    <div>
+
+                        <small>
+                            Instagram
+                        </small>
+
+                        <strong>
+                            @matamarkett
+                        </strong>
+
+                    </div>
+
+                </div>
+
+                <a
+                    href="https://instagram.com/matamarkett"
+                    target="_blank"
+                    rel="noopener"
+                    class="btn btn-primary"
+                >
+                    Открыть Instagram
+                </a>
+
+            </div>
+
         </div>
 
-        <div class="contact-card">
-            <h3>📷 Мы в Instagram</h3>
-            <div class="contact-item">
-                <div class="contact-icon">📷</div>
-                <div>
-                    <small>Instagram</small>
-                    <strong>@matamarkett</strong>
-                </div>
-            </div>
-            <a href="https://instagram.com/matamarkett" target="_blank" rel="noopener" class="btn btn-primary">
-                Открыть Instagram
-            </a>
-        </div>
     </div>
-</div>
+
 </section>
 
-<!-- FOOTER -->
+
+<!-- ================= FOOTER ================= -->
+
 <footer>
-<div class="container footer-content">
-    <div>
-        <div class="footer-brand">Mata Маркет</div>
-        <div>Товары для дома и уюта</div>
+
+    <div class="container footer-content">
+
+        <div>
+
+            <div class="footer-brand">
+                Mata Маркет
+            </div>
+
+            <div>
+                Товары для дома и уюта
+            </div>
+
+        </div>
+
+        <a
+            href="https://instagram.com/matamarkett"
+            target="_blank"
+            rel="noopener"
+        >
+            @matamarkett
+        </a>
+
     </div>
-    <a href="https://instagram.com/matamarkett" target="_blank" rel="noopener">@matamarkett</a>
-</div>
+
 </footer>
 
-<!-- CART OVERLAY -->
-<div class="cart-overlay" id="cartOverlay">
-<div class="cart">
-    <div class="cart-header">
-        <h2>🛒 Корзина</h2>
-        <button class="close-btn" onclick="closeCart()">✕</button>
+
+<!-- ================= CART ================= -->
+
+<div
+    class="cart-overlay"
+    id="cartOverlay"
+>
+
+    <div class="cart">
+
+        <div class="cart-header">
+
+            <h2>
+                🛒 Корзина
+            </h2>
+
+            <button
+                class="close-btn"
+                onclick="closeCart()"
+            >
+                ✕
+            </button>
+
+        </div>
+
+        <div id="cartContent"></div>
+
     </div>
-    <div id="cartContent"></div>
-</div>
+
 </div>
 
-<!-- LIGHTBOX FOR IMAGES -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-    <img id="lightboxImg" src="" alt="Просмотр">
+
+<!-- ================= LIGHTBOX ================= -->
+
+<div
+    class="lightbox"
+    id="lightbox"
+    onclick="closeLightbox()"
+>
+
+    <button
+        class="lightbox-close"
+        onclick="closeLightbox()"
+    >
+        ✕
+    </button>
+
+    <img
+        id="lightboxImg"
+        src=""
+        alt="Просмотр фотографии"
+        onclick="event.stopPropagation()"
+    >
+
 </div>
 
-<!-- SUCCESS MODAL -->
-<div class="success" id="success">
-<div class="success-box">
-    <div class="success-icon">✅</div>
-    <h2>Заказ принят!</h2>
-    <p id="successText">Спасибо за ваш заказ.</p>
-    <button class="btn btn-primary" onclick="closeSuccess()">Хорошо</button>
-</div>
+
+<!-- ================= SUCCESS ================= -->
+
+<div
+    class="success"
+    id="success"
+>
+
+    <div class="success-box">
+
+        <div class="success-icon">
+            ✅
+        </div>
+
+        <h2>
+            Заказ принят!
+        </h2>
+
+        <p id="successText">
+            Спасибо за ваш заказ.
+        </p>
+
+        <button
+            class="btn btn-primary"
+            onclick="closeSuccess()"
+        >
+            Хорошо
+        </button>
+
+    </div>
+
 </div>
 
-<!-- SUPABASE -->
+
+<!-- ================= TOAST ================= -->
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<!-- ================= SUPABASE ================= -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-/* SUPABASE CONFIG */
-const SUPABASE_URL = "https://jcdghaehpdrawxoetqmm.supabase.co";
-const SUPABASE_KEY = "sb_publishable_t5zOzDbKIghdy0r9hzukNQ_AmmdZZ8O";
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-/* ФОТО-ЗАГЛУШКИ, ЕСЛИ ФАЙЛЫ НЕ НАЙДЕНЫ */
+/* =====================================================
+   SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+    "https://jcdghaehpdrawxoetqmm.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_t5zOzDbKIghdy0r9hzukNQ_AmmdZZ8O";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* =====================================================
+   FALLBACK IMAGES
+===================================================== */
+
 const fallbackImages = [
-    "https://images.unsplash.com/photo-1616627547584-bf28cee262db?auto=format&fit=crop&w=400&q=80",
-    "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=400&q=80",
-    "https://images.unsplash.com/photo-1616627561839-074385245ff6?auto=format&fit=crop&w=400&q=80"
+    "https://images.unsplash.com/photo-1616627547584-bf28cee262db?auto=format&fit=crop&w=600&q=80",
+    "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=600&q=80",
+    "https://images.unsplash.com/photo-1616627561839-074385245ff6?auto=format&fit=crop&w=600&q=80"
 ];
 
-/* PRODUCTS DATA */
+
+/* =====================================================
+   PRODUCTS
+===================================================== */
+
 const products = [
-    { id: "fabric", name: "Ткани", icon: "🧵", description: "Различные виды тканей для дома, одежды, шитья и декора.", price: 3000 },
-    { id: "accessories", name: "Фурнитура", icon: "🪡", description: "Всё необходимое для шитья, рукоделия и творчества.", price: 500 },
-    { 
-        id: "towels", 
-        name: "Полотенца", 
-        icon: "🛁", 
-        description: "Мягкие махровые полотенца для ванной, кухни и всей семьи.", 
-        price: 2500,
-        images: ["polotence-1.jpg", "polotence-2.jpg", "polotence-3.jpg"] 
+
+    /* ===== ПОЛОТЕНЦА ===== */
+
+    {
+        id: "towel-cozy-house",
+        category: "towels",
+        name: "Cozy House",
+        icon: "🛁",
+        description:
+            "Мягкое и приятное полотенце для ванной и ежедневного использования.",
+        price: 300,
+        images: [
+            "polotence-1.jpg"
+        ],
+        badge: "300 ₸"
     },
-    { id: "bed", name: "Постельное бельё", icon: "🛏️", description: "Пододеяльники, простыни и товары для комфортного сна.", price: 8000 },
-    { id: "pillows", name: "Подушки", icon: "🛋️", description: "Уютные подушки для отдыха и оформления интерьера.", price: 4000 },
-    { id: "dishes", name: "Посуда", icon: "🍽️", description: "Практичная и красивая посуда для вашего дома.", price: 1500 },
-    { id: "clothes", name: "Домашняя одежда", icon: "👕", description: "Комфортная одежда для дома и отдыха.", price: 7000 },
-    { id: "home", name: "Всё для дома", icon: "🏠", description: "Полезные товары для создания атмосферы уюта.", price: 2000 }
+
+    {
+        id: "towel-coffee",
+        category: "towels",
+        name: "Кофе",
+        icon: "☕",
+        description:
+            "Стильное полотенце в уютном дизайне для дома.",
+        price: 300,
+        images: [
+            "polotence-2.jpg"
+        ],
+        badge: "300 ₸"
+    },
+
+    {
+        id: "towel-verona",
+        category: "towels",
+        name: "Verona",
+        icon: "🌸",
+        description:
+            "Красивое и практичное полотенце для всей семьи.",
+        price: 300,
+        images: [
+            "polotence-3.jpg"
+        ],
+        badge: "300 ₸"
+    },
+
+
+    /* ===== ОСТАЛЬНЫЕ ТОВАРЫ ===== */
+
+    {
+        id: "fabric",
+        category: "fabric",
+        name: "Ткани",
+        icon: "🧵",
+        description:
+            "Различные виды тканей для дома, одежды, шитья и декора.",
+        price: 3000,
+        images: [],
+        badge: "Каталог"
+    },
+
+    {
+        id: "accessories",
+        category: "accessories",
+        name: "Фурнитура",
+        icon: "🪡",
+        description:
+            "Всё необходимое для шитья, рукоделия и творчества.",
+        price: 500,
+        images: [],
+        badge: "Каталог"
+    },
+
+    {
+        id: "bed",
+        category: "bed",
+        name: "Постельное бельё",
+        icon: "🛏️",
+        description:
+            "Пододеяльники, простыни и товары для комфортного сна.",
+        price: 8000,
+        images: [],
+        badge: "Каталог"
+    },
+
+    {
+        id: "pillows",
+        category: "pillows",
+        name: "Подушки",
+        icon: "🛋️",
+        description:
+            "Уютные подушки для отдыха и оформления интерьера.",
+        price: 4000,
+        images: [],
+        badge: "Каталог"
+    },
+
+    {
+        id: "dishes",
+        category: "dishes",
+        name: "Посуда",
+        icon: "🍽️",
+        description:
+            "Практичная и красивая посуда для вашего дома.",
+        price: 1500,
+        images: [],
+        badge: "Каталог"
+    },
+
+    {
+        id: "clothes",
+        category: "clothes",
+        name: "Домашняя одежда",
+        icon: "👕",
+        description:
+            "Комфортная одежда для дома и отдыха.",
+        price: 7000,
+        images: [],
+        badge: "Каталог"
+    },
+
+    {
+        id: "home",
+        category: "home",
+        name: "Всё для дома",
+        icon: "🏠",
+        description:
+            "Полезные товары для создания атмосферы уюта.",
+        price: 2000,
+        images: [],
+        badge: "Каталог"
+    }
+
 ];
+
 
 let cart = [];
 
-/* CATALOG RENDER */
-function renderCatalog() {
-    const catalog = document.getElementById("catalogList");
-    catalog.innerHTML = products.map(product => {
-        const galleryHtml = product.images && product.images.length > 0 
-            ? `<div class="product-gallery">
-                ${product.images.map((img, index) => `
-                    <img src="${escapeHtml(img)}" 
-                         alt="${escapeHtml(product.name)}" 
-                         onerror="this.onerror=null; this.src='${fallbackImages[index % fallbackImages.length]}';"
-                         onclick="openLightbox(this.src)">
-                `).join('')}
-               </div>` 
-            : '';
+let currentCategory = "all";
 
-        return `
-            <div class="product">
-                <div class="product-icon">${product.icon}</div>
-                <h3>${escapeHtml(product.name)}</h3>
-                <div class="product-description">${escapeHtml(product.description)}</div>
-                ${galleryHtml}
-                <div class="product-price">от ${formatPrice(product.price)} ₸</div>
-                <button class="add-btn" onclick="addToCart('${product.id}')">
-                    🛒 Добавить в корзину
-                </button>
-            </div>
-        `;
-    }).join("");
-}
 
-/* LIGHTBOX FOR BIGGER IMAGES */
-function openLightbox(src) {
-    document.getElementById("lightboxImg").src = src;
-    document.getElementById("lightbox").classList.add("active");
-}
+/* =====================================================
+   CATEGORY NAMES
+===================================================== */
 
-function closeLightbox() {
-    document.getElementById("lightbox").classList.remove("active");
-}
+const categoryNames = {
 
-/* CART ACTIONS */
-function addToCart(id) {
-    const product = products.find(item => item.id === id);
-    if (!product) return;
+    all: "Все товары",
 
-    const existing = cart.find(item => item.id === id);
-    if (existing) {
-        existing.quantity++;
-    } else {
-        cart.push({
-            id: product.id,
-            name: product.name,
-            icon: product.icon,
-            price: product.price,
-            quantity: 1
+    towels: "Полотенца",
+
+    fabric: "Ткани",
+
+    accessories: "Фурнитура",
+
+    bed: "Постельное бельё",
+
+    pillows: "Подушки",
+
+    dishes: "Посуда",
+
+    clothes: "Домашняя одежда",
+
+    home: "Всё для дома"
+
+};
+
+
+/* =====================================================
+   SELECT CATEGORY
+===================================================== */
+
+function selectCategory(category) {
+
+    currentCategory = category;
+
+    document
+        .querySelectorAll(".category-btn")
+        .forEach(button => {
+
+            button.classList.toggle(
+                "active",
+                button.dataset.category === category
+            );
+
         });
+
+    document.getElementById(
+        "currentCategoryTitle"
+    ).textContent =
+        categoryNames[category] || "Каталог";
+
+
+    const towelsBanner =
+        document.getElementById("towelsBanner");
+
+    if (category === "towels") {
+
+        towelsBanner.style.display = "flex";
+
+    } else {
+
+        towelsBanner.style.display = "none";
+
     }
 
-    updateCartCount();
-    openCart();
+    renderCatalog();
+
+    document
+        .getElementById("catalog")
+        .scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
 }
 
-function changeQuantity(id, change) {
-    const item = cart.find(product => product.id === id);
-    if (!item) return;
 
-    item.quantity += change;
+/* =====================================================
+   RENDER CATALOG
+===================================================== */
 
-    if (item.quantity <= 0) {
-        cart = cart.filter(product => product.id !== id);
+function renderCatalog() {
+
+    const catalog =
+        document.getElementById("catalogList");
+
+    let filteredProducts = products;
+
+    if (currentCategory !== "all") {
+
+        filteredProducts =
+            products.filter(
+                product =>
+                    product.category === currentCategory
+            );
+
     }
 
-    updateCartCount();
-    renderCart();
-}
 
-function removeFromCart(id) {
-    cart = cart.filter(item => item.id !== id);
-    updateCartCount();
-    renderCart();
-}
+    document.getElementById(
+        "productsCount"
+    ).textContent =
+        filteredProducts.length +
+        " " +
+        getProductsWord(filteredProducts.length);
 
-function getCartTotal() {
-    return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-}
 
-function updateCartCount() {
-    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-    document.getElementById("cartCount").textContent = count;
-}
+    if (filteredProducts.length === 0) {
 
-/* RENDER CART INTERFACE */
-function renderCart() {
-    const content = document.getElementById("cartContent");
-
-    if (cart.length === 0) {
-        content.innerHTML = `
-            <div class="empty-cart">
-                <div style="font-size:50px">🛒</div>
-                <p>Корзина пока пустая</p>
-                <button class="btn btn-primary" style="margin-top:15px" onclick="closeCart(); document.getElementById('catalog').scrollIntoView({behavior: 'smooth'});">
-                    Перейти в каталог
-                </button>
+        catalog.innerHTML = `
+            <div class="empty-products">
+                <div style="font-size:50px">🛍️</div>
+                <p>В этой категории пока нет товаров.</p>
             </div>
         `;
+
         return;
+
     }
 
-    content.innerHTML = `
-        <div class="cart-items">
-            ${cart.map(item => `
-                <div class="cart-item">
-                    <div class="cart-item-top">
-                        <div>
-                            <div class="cart-item-name">${item.icon} ${escapeHtml(item.name)}</div>
-                            <div style="color:#70727d;font-size:13px;margin-top:3px">
-                                ${formatPrice(item.price)} ₸ / шт.
-                            </div>
-                        </div>
-                        <div class="cart-item-price">
-                            ${formatPrice(item.price * item.quantity)} ₸
-                        </div>
-                    </div>
-                    <div class="quantity">
-                        <button onclick="changeQuantity('${item.id}', -1)">−</button>
-                        <strong>${item.quantity}</strong>
-                        <button onclick="changeQuantity('${item.id}', 1)">+</button>
-                        <button class="remove-btn" onclick="removeFromCart('${item.id}')">🗑️</button>
-                    </div>
+
+    catalog.innerHTML =
+        filteredProducts
+            .map(renderProduct)
+            .join("");
+
+}
+
+
+/* =====================================================
+   PRODUCT CARD
+===================================================== */
+
+function renderProduct(product) {
+
+    let imageHtml = "";
+
+    if (
+        product.images &&
+        product.images.length > 0
+    ) {
+
+        imageHtml = `
+            <img
+                class="product-main-image"
+                src="${escapeHtml(product.images[0])}"
+                alt="${escapeHtml(product.name)}"
+                onerror="
+                    this.onerror=null;
+                    this.src='${fallbackImages[0]}';
+                "
+                onclick="openLightbox(this.src)"
+            >
+        `;
+
+    } else {
+
+        imageHtml = `
+            <div class="product-image-placeholder">
+                ${product.icon}
+            </div>
+        `;
+
+    }
+
+
+    let galleryHtml = "";
+
+    if (
+        product.images &&
+        product.images.length > 1
+    ) {
+
+        galleryHtml = `
+            <div class="product-gallery">
+
+                ${product.images
+                    .map(
+                        (img, index) => `
+                            <img
+                                src="${escapeHtml(img)}"
+                                alt="${escapeHtml(product.name)}"
+                                onerror="
+                                    this.onerror=null;
+                                    this.src='${fallbackImages[index % fallbackImages.length]}';
+                                "
+                                onclick="openLightbox(this.src)"
+                            >
+                        `
+                    )
+                    .join("")}
+
+            </div>
+        `;
+
+    }
+
+
+    const isTowel =
+        product.category === "towels";
+
+
+    return `
+        <article class="product">
+
+            <div class="product-image-wrap">
+
+                ${imageHtml}
+
+                <div class="product-badge">
+                    ${escapeHtml(product.badge)}
                 </div>
-            `).join("")}
-        </div>
 
-        <div class="cart-total">
-            <span>Итого</span>
-            <strong>${formatPrice(getCartTotal())} ₸</strong>
-        </div>
+            </div>
 
-        <div class="order-form">
-            <h3>👤 Данные для заказа</h3>
-            <div class="form-group">
-                <label>Ваше имя *</label>
-                <input id="customerName" type="text" placeholder="Например, Алия" autocomplete="name">
+
+            <div class="product-body">
+
+                <div class="product-icon">
+                    ${product.icon}
+                </div>
+
+                <h3>
+                    ${escapeHtml(product.name)}
+                </h3>
+
+                <div class="product-description">
+                    ${escapeHtml(product.description)}
+                </div>
+
+                ${galleryHtml}
+
+
+                <div class="product-bottom">
+
+                    <div class="product-price">
+
+                        <span class="price-number">
+                            ${formatPrice(product.price)} ₸
+                        </span>
+
+                        <span class="price-unit">
+                            / шт.
+                        </span>
+
+                    </div>
+
+                    <button
+                        class="add-btn"
+                        onclick="addToCart('${product.id}')"
+                    >
+                        🛒 Добавить в корзину
+                    </button>
+
+                </div>
+
             </div>
-            <div class="form-group">
-                <label>Телефон *</label>
-                <input id="customerPhone" type="tel" placeholder="+7 777 123 45 67" autocomplete="tel">
-            </div>
-            <div class="form-group">
-                <label>Способ получения *</label>
-                <select id="deliveryType">
-                    <option value="Самовывоз">🏪 Самовывоз</option>
-                    <option value="Доставка">🚚 Доставка</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Адрес доставки</label>
-                <input id="deliveryAddress" type="text" placeholder="Введите адрес, если нужна доставка">
-            </div>
-            <div class="form-group">
-                <label>Комментарий</label>
-                <textarea id="comment" placeholder="Дополнительная информация..."></textarea>
-            </div>
-            <button id="submitOrder" class="order-submit" onclick="submitOrder()">
-                ✅ Оформить заказ
-            </button>
-        </div>
+
+        </article>
     `;
 }
 
-/* OVERLAY CONTROL */
-function openCart() {
-    renderCart();
-    document.getElementById("cartOverlay").classList.add("active");
+
+/* =====================================================
+   ADD TO CART
+===================================================== */
+
+function addToCart(id) {
+
+    const product =
+        products.find(
+            item => item.id === id
+        );
+
+    if (!product) return;
+
+
+    const existing =
+        cart.find(
+            item => item.id === id
+        );
+
+
+    if (existing) {
+
+        existing.quantity++;
+
+    } else {
+
+        cart.push({
+
+            id: product.id,
+
+            name: product.name,
+
+            icon: product.icon,
+
+            price: product.price,
+
+            quantity: 1
+
+        });
+
+    }
+
+
+    updateCartCount();
+
+    showToast(
+        `${product.name} добавлен в корзину`
+    );
+
+    openCart();
+
 }
+
+
+/* =====================================================
+   QUANTITY
+===================================================== */
+
+function changeQuantity(id, change) {
+
+    const item =
+        cart.find(
+            product => product.id === id
+        );
+
+    if (!item) return;
+
+
+    item.quantity += change;
+
+
+    if (item.quantity <= 0) {
+
+        cart =
+            cart.filter(
+                product => product.id !== id
+            );
+
+    }
+
+
+    updateCartCount();
+
+    renderCart();
+
+}
+
+
+/* =====================================================
+   REMOVE
+===================================================== */
+
+function removeFromCart(id) {
+
+    const item =
+        cart.find(
+            product => product.id === id
+        );
+
+    cart =
+        cart.filter(
+            product => product.id !== id
+        );
+
+    updateCartCount();
+
+    renderCart();
+
+    if (item) {
+
+        showToast(
+            `${item.name} удалён из корзины`
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   CART TOTAL
+===================================================== */
+
+function getCartTotal() {
+
+    return cart.reduce(
+        (sum, item) =>
+            sum + item.price * item.quantity,
+        0
+    );
+
+}
+
+
+/* =====================================================
+   CART COUNT
+===================================================== */
+
+function updateCartCount() {
+
+    const count =
+        cart.reduce(
+            (sum, item) =>
+                sum + item.quantity,
+            0
+        );
+
+    document.getElementById(
+        "cartCount"
+    ).textContent = count;
+
+}
+
+
+/* =====================================================
+   RENDER CART
+===================================================== */
+
+function renderCart() {
+
+    const content =
+        document.getElementById(
+            "cartContent"
+        );
+
+
+    if (cart.length === 0) {
+
+        content.innerHTML = `
+
+            <div class="empty-cart">
+
+                <div style="font-size:50px">
+                    🛒
+                </div>
+
+                <p>
+                    Корзина пока пустая
+                </p>
+
+                <button
+                    class="btn btn-primary"
+                    style="margin-top:15px"
+                    onclick="
+                        closeCart();
+                        document
+                            .getElementById('catalog')
+                            .scrollIntoView({
+                                behavior:'smooth'
+                            });
+                    "
+                >
+                    Перейти в каталог
+                </button>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    content.innerHTML = `
+
+        <div class="cart-items">
+
+            ${cart.map(item => `
+
+                <div class="cart-item">
+
+                    <div class="cart-item-top">
+
+                        <div>
+
+                            <div class="cart-item-name">
+                                ${item.icon}
+                                ${escapeHtml(item.name)}
+                            </div>
+
+                            <div
+                                style="
+                                    color:#70727d;
+                                    font-size:13px;
+                                    margin-top:3px;
+                                "
+                            >
+                                ${formatPrice(item.price)}
+                                ₸ / шт.
+                            </div>
+
+                        </div>
+
+                        <div class="cart-item-price">
+
+                            ${formatPrice(
+                                item.price *
+                                item.quantity
+                            )}
+                            ₸
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="quantity">
+
+                        <button
+                            onclick="
+                                changeQuantity(
+                                    '${item.id}',
+                                    -1
+                                )
+                            "
+                        >
+                            −
+                        </button>
+
+                        <strong>
+                            ${item.quantity}
+                        </strong>
+
+                        <button
+                            onclick="
+                                changeQuantity(
+                                    '${item.id}',
+                                    1
+                                )
+                            "
+                        >
+                            +
+                        </button>
+
+                        <button
+                            class="remove-btn"
+                            onclick="
+                                removeFromCart(
+                                    '${item.id}'
+                                )
+                            "
+                        >
+                            🗑️
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `).join("")}
+
+        </div>
+
+
+        <div class="cart-total">
+
+            <span>
+                Итого
+            </span>
+
+            <strong>
+                ${formatPrice(getCartTotal())} ₸
+            </strong>
+
+        </div>
+
+
+        <div class="order-form">
+
+            <h3>
+                👤 Данные для заказа
+            </h3>
+
+
+            <div class="form-group">
+
+                <label>
+                    Ваше имя *
+                </label>
+
+                <input
+                    id="customerName"
+                    type="text"
+                    placeholder="Например, Алия"
+                    autocomplete="name"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Телефон *
+                </label>
+
+                <input
+                    id="customerPhone"
+                    type="tel"
+                    placeholder="+7 777 123 45 67"
+                    autocomplete="tel"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Способ получения *
+                </label>
+
+                <select id="deliveryType">
+
+                    <option value="Самовывоз">
+                        🏪 Самовывоз
+                    </option>
+
+                    <option value="Доставка">
+                        🚚 Доставка
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Адрес доставки
+                </label>
+
+                <input
+                    id="deliveryAddress"
+                    type="text"
+                    placeholder="Введите адрес, если нужна доставка"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Комментарий
+                </label>
+
+                <textarea
+                    id="comment"
+                    placeholder="Дополнительная информация..."
+                ></textarea>
+
+            </div>
+
+
+            <button
+                id="submitOrder"
+                class="order-submit"
+                onclick="submitOrder()"
+            >
+                ✅ Оформить заказ
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   OPEN CART
+===================================================== */
+
+function openCart() {
+
+    renderCart();
+
+    document
+        .getElementById("cartOverlay")
+        .classList.add("active");
+
+    document.body.classList.add(
+        "no-scroll"
+    );
+
+}
+
+
+/* =====================================================
+   CLOSE CART
+===================================================== */
 
 function closeCart() {
-    document.getElementById("cartOverlay").classList.remove("active");
+
+    document
+        .getElementById("cartOverlay")
+        .classList.remove("active");
+
+    document.body.classList.remove(
+        "no-scroll"
+    );
+
 }
 
-document.getElementById("cartOverlay").addEventListener("click", function(event) {
-    if (event.target === this) {
-        closeCart();
-    }
-});
 
-/* SUBMIT ORDER TO SUPABASE */
+/* =====================================================
+   CLOSE CART BY BACKDROP
+===================================================== */
+
+document
+    .getElementById("cartOverlay")
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === this
+            ) {
+
+                closeCart();
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   SUBMIT ORDER
+===================================================== */
+
 async function submitOrder() {
+
     if (cart.length === 0) {
-        alert("Корзина пустая.");
+
+        alert(
+            "Корзина пустая."
+        );
+
         return;
+
     }
 
-    const nameEl = document.getElementById("customerName");
-    const phoneEl = document.getElementById("customerPhone");
-    const addressEl = document.getElementById("deliveryAddress");
-    const commentEl = document.getElementById("comment");
-    const deliveryTypeEl = document.getElementById("deliveryType");
 
-    const name = nameEl ? nameEl.value.trim() : "";
-    const phone = phoneEl ? phoneEl.value.trim() : "";
-    const deliveryType = deliveryTypeEl ? deliveryTypeEl.value : "Самовывоз";
-    const address = addressEl ? addressEl.value.trim() : "";
-    const comment = commentEl ? commentEl.value.trim() : "";
+    const nameEl =
+        document.getElementById(
+            "customerName"
+        );
+
+    const phoneEl =
+        document.getElementById(
+            "customerPhone"
+        );
+
+    const addressEl =
+        document.getElementById(
+            "deliveryAddress"
+        );
+
+    const commentEl =
+        document.getElementById(
+            "comment"
+        );
+
+    const deliveryTypeEl =
+        document.getElementById(
+            "deliveryType"
+        );
+
+
+    const name =
+        nameEl
+            ? nameEl.value.trim()
+            : "";
+
+
+    const phone =
+        phoneEl
+            ? phoneEl.value.trim()
+            : "";
+
+
+    const deliveryType =
+        deliveryTypeEl
+            ? deliveryTypeEl.value
+            : "Самовывоз";
+
+
+    const address =
+        addressEl
+            ? addressEl.value.trim()
+            : "";
+
+
+    const comment =
+        commentEl
+            ? commentEl.value.trim()
+            : "";
+
 
     if (!name) {
-        alert("Введите ваше имя.");
+
+        alert(
+            "Введите ваше имя."
+        );
+
         return;
+
     }
+
 
     if (!phone) {
-        alert("Введите номер телефона.");
+
+        alert(
+            "Введите номер телефона."
+        );
+
         return;
+
     }
 
-    if (deliveryType === "Доставка" && !address) {
-        alert("Введите адрес доставки.");
+
+    if (
+        deliveryType === "Доставка" &&
+        !address
+    ) {
+
+        alert(
+            "Введите адрес доставки."
+        );
+
         return;
+
     }
 
-    const button = document.getElementById("submitOrder");
+
+    const button =
+        document.getElementById(
+            "submitOrder"
+        );
+
+
     button.disabled = true;
-    button.textContent = "⏳ Отправляем заказ...";
 
-    const orderItems = cart.map(item => ({
-        id: item.id,
-        name: item.name,
-        icon: item.icon,
-        price: item.price,
-        quantity: item.quantity
-    }));
+    button.textContent =
+        "⏳ Отправляем заказ...";
 
-    const total = getCartTotal();
+
+    const orderItems =
+        cart.map(item => ({
+
+            id: item.id,
+
+            name: item.name,
+
+            icon: item.icon,
+
+            price: item.price,
+
+            quantity: item.quantity
+
+        }));
+
+
+    const total =
+        getCartTotal();
+
 
     try {
-        const { data, error } = await supabaseClient
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+
             .from("orders")
+
             .insert([{
-                customer_name: name,
-                customer_phone: phone,
-                delivery_type: deliveryType,
-                delivery_address: address || null,
-                comment: comment || null,
-                items: orderItems,
-                total: total,
-                status: "Новый"
+
+                customer_name:
+                    name,
+
+                customer_phone:
+                    phone,
+
+                delivery_type:
+                    deliveryType,
+
+                delivery_address:
+                    address || null,
+
+                comment:
+                    comment || null,
+
+                items:
+                    orderItems,
+
+                total:
+                    total,
+
+                status:
+                    "Новый"
+
             }])
+
             .select()
+
             .single();
 
+
         if (error) {
+
             throw error;
+
         }
 
-        const orderNumber = data && data.id ? data.id : "";
+
+        const orderNumber =
+            data && data.id
+                ? data.id
+                : "";
+
 
         cart = [];
+
         updateCartCount();
+
         closeCart();
 
-        document.getElementById("successText").textContent = orderNumber
+
+        document.getElementById(
+            "successText"
+        ).textContent = orderNumber
+
             ? `Ваш заказ №${orderNumber} успешно принят. Мы свяжемся с вами для подтверждения.`
+
             : "Ваш заказ успешно принят. Мы свяжемся с вами для подтверждения.";
 
-        document.getElementById("success").classList.add("active");
+
+        document
+            .getElementById("success")
+            .classList.add("active");
+
+
     } catch (error) {
-        console.error("Ошибка Supabase:", error);
-        alert("Не удалось отправить заказ.\n\n" + (error.message || "Ошибка подключения"));
+
+        console.error(
+            "Ошибка Supabase:",
+            error
+        );
+
+        alert(
+            "Не удалось отправить заказ.\n\n" +
+            (
+                error.message ||
+                "Ошибка подключения"
+            )
+        );
+
+
     } finally {
+
         if (button) {
+
             button.disabled = false;
-            button.textContent = "✅ Оформить заказ";
+
+            button.textContent =
+                "✅ Оформить заказ";
+
         }
+
     }
+
 }
+
+
+/* =====================================================
+   SUCCESS
+===================================================== */
 
 function closeSuccess() {
-    document.getElementById("success").classList.remove("active");
+
+    document
+        .getElementById("success")
+        .classList.remove(
+            "active"
+        );
+
 }
 
-/* UTILS */
-function formatPrice(value) {
-    return new Intl.NumberFormat("ru-RU").format(value);
+
+/* =====================================================
+   LIGHTBOX
+===================================================== */
+
+function openLightbox(src) {
+
+    document
+        .getElementById("lightboxImg")
+        .src = src;
+
+    document
+        .getElementById("lightbox")
+        .classList.add("active");
+
 }
+
+
+function closeLightbox() {
+
+    document
+        .getElementById("lightbox")
+        .classList.remove("active");
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+let toastTimer;
+
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+    toast.textContent =
+        message;
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            () => {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2200
+        );
+
+}
+
+
+/* =====================================================
+   UTILS
+===================================================== */
+
+function formatPrice(value) {
+
+    return new Intl.NumberFormat(
+        "ru-RU"
+    ).format(value);
+
+}
+
 
 function escapeHtml(value) {
+
     return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
 }
 
-/* INIT */
+
+function getProductsWord(count) {
+
+    if (
+        count % 10 === 1 &&
+        count % 100 !== 11
+    ) {
+        return "товар";
+    }
+
+    if (
+        [2,3,4].includes(
+            count % 10
+        ) &&
+        ![12,13,14].includes(
+            count % 100
+        )
+    ) {
+        return "товара";
+    }
+
+    return "товаров";
+
+}
+
+
+/* =====================================================
+   INIT
+===================================================== */
+
 renderCatalog();
+
 updateCartCount();
+
 </script>
 
 </body>
