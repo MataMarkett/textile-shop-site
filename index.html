@@ -264,6 +264,8 @@ section {
     padding: 23px;
     box-shadow: 0 8px 25px rgba(0,0,0,.03);
     transition: .25s;
+    display: flex;
+    flex-direction: column;
 }
 
 .product:hover {
@@ -294,8 +296,30 @@ section {
     min-height: 44px;
 }
 
+/* GALLERY IN PRODUCT */
+.product-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.product-gallery img {
+    width: 100%;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    transition: transform 0.2s;
+}
+
+.product-gallery img:hover {
+    transform: scale(1.05);
+}
+
 .product-price {
-    margin-top: 13px;
+    margin-top: auto;
+    padding-top: 13px;
     font-size: 18px;
     font-weight: 800;
     color: var(--blue);
@@ -823,8 +847,15 @@ const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const products = [
     { id: "fabric", name: "Ткани", icon: "🧵", description: "Различные виды тканей для дома, одежды, шитья и декора.", price: 3000 },
     { id: "accessories", name: "Фурнитура", icon: "🪡", description: "Всё необходимое для шитья, рукоделия и творчества.", price: 500 },
+    { 
+        id: "towels", 
+        name: "Полотенца", 
+        icon: "🛁", 
+        description: "Мягкие полотенца для ванной, кухни и всей семьи.", 
+        price: 2500,
+        images: ["polotence 1.jpg", "polotence 2.jpg", "polotence 3.jpg"] 
+    },
     { id: "bed", name: "Постельное бельё", icon: "🛏️", description: "Пододеяльники, простыни и товары для комфортного сна.", price: 8000 },
-    { id: "towels", name: "Полотенца", icon: "🛁", description: "Мягкие полотенца для ванной, кухни и всей семьи.", price: 2500 },
     { id: "pillows", name: "Подушки", icon: "🛋️", description: "Уютные подушки для отдыха и оформления интерьера.", price: 4000 },
     { id: "dishes", name: "Посуда", icon: "🍽️", description: "Практичная и красивая посуда для вашего дома.", price: 1500 },
     { id: "clothes", name: "Домашняя одежда", icon: "👕", description: "Комфортная одежда для дома и отдыха.", price: 7000 },
@@ -836,17 +867,26 @@ let cart = [];
 /* CATALOG RENDER */
 function renderCatalog() {
     const catalog = document.getElementById("catalogList");
-    catalog.innerHTML = products.map(product => `
-        <div class="product">
-            <div class="product-icon">${product.icon}</div>
-            <h3>${escapeHtml(product.name)}</h3>
-            <div class="product-description">${escapeHtml(product.description)}</div>
-            <div class="product-price">от ${formatPrice(product.price)} ₸</div>
-            <button class="add-btn" onclick="addToCart('${product.id}')">
-                🛒 Добавить в корзину
-            </button>
-        </div>
-    `).join("");
+    catalog.innerHTML = products.map(product => {
+        const galleryHtml = product.images && product.images.length > 0 
+            ? `<div class="product-gallery">
+                ${product.images.map(img => `<img src="${escapeHtml(img)}" alt="${escapeHtml(product.name)}">`).join('')}
+               </div>` 
+            : '';
+
+        return `
+            <div class="product">
+                <div class="product-icon">${product.icon}</div>
+                <h3>${escapeHtml(product.name)}</h3>
+                <div class="product-description">${escapeHtml(product.description)}</div>
+                ${galleryHtml}
+                <div class="product-price">от ${formatPrice(product.price)} ₸</div>
+                <button class="add-btn" onclick="addToCart('${product.id}')">
+                    🛒 Добавить в корзину
+                </button>
+            </div>
+        `;
+    }).join("");
 }
 
 /* CART ACTIONS */
